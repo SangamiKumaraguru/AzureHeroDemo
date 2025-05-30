@@ -10,11 +10,13 @@
         h1 { text-align: center; color: #333; }
         .flashcard { background: #e3e3ff; margin: 16px 0; padding: 16px; border-radius: 6px; }
         .question { font-weight: bold; }
-        .answer { color: #555; margin-top: 8px; }
+        .answer { color: #555; margin-top: 8px; display:none; }
         form { margin-top: 32px; }
         input, button { padding: 8px; margin: 4px 0; width: 100%; box-sizing: border-box; }
         button { background: #4f6d7a; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
         button:hover { background: #39505a; }
+        .delete-button { background: #c0392b; }
+        .delete-button:hover { background: #a93226; }
     </style>
 </head>
 <body>
@@ -24,6 +26,10 @@
         <div class="flashcard">
             <div class="question">Q: {{ card.question }}</div>
             <div class="answer">A: {{ card.answer }}</div>
+            <button type="button" onclick="toggleAnswer(this)">Show/Hide Answer</button>
+            <form method="POST" action="/delete/{{ loop.index0 }}" style="display:inline;">
+                <button type="submit" class="delete-button">Delete</button>
+            </form>
         </div>
         {% endfor %}
         <form method="POST" action="/add">
@@ -33,5 +39,15 @@
             <button type="submit">Add</button>
         </form>
     </div>
+    <script>
+    function toggleAnswer(btn) {
+        var answer = btn.parentElement.querySelector('.answer');
+        if (answer.style.display === 'none' || answer.style.display === '') {
+            answer.style.display = 'block';
+        } else {
+            answer.style.display = 'none';
+        }
+    }
+    </script>
 </body>
 </html>
