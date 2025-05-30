@@ -1,0 +1,36 @@
+# This workflow enables secret scanning, dependency graph, and vulnerability detection for your Python project
+name: "Security Scans"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * 0'
+
+jobs:
+  secret-scan:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run GitHub Advanced Security Secret Scanning
+        uses: github/secret-scanning-action@v1
+
+  dependency-graph:
+    name: Dependency Graph & Vulnerability Detection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Upload Python dependencies for dependency graph
+        uses: actions/upload-artifact@v4
+        with:
+          name: requirements
+          path: requirements.txt
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
