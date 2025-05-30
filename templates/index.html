@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard App</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 40px auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; }
+        .flashcard { background: #e3e3ff; margin: 16px 0; padding: 16px; border-radius: 6px; }
+        .question { font-weight: bold; }
+        .answer { color: #555; margin-top: 8px; }
+        form { margin-top: 32px; }
+        input, button { padding: 8px; margin: 4px 0; width: 100%; box-sizing: border-box; }
+        button { background: #4f6d7a; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #39505a; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flashcard App</h1>
+        {% for card in flashcards %}
+        <div class="flashcard">
+            <div class="question">Q: {{ card.question }}</div>
+            <div class="answer">A: {{ card.answer }}</div>
+        </div>
+        {% endfor %}
+        <form method="POST" action="/add">
+            <h2>Add a Flashcard</h2>
+            <input type="text" name="question" placeholder="Question" required>
+            <input type="text" name="answer" placeholder="Answer" required>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+</body>
+</html>
